@@ -1,0 +1,51 @@
+/*
+ * The goal of this page is to create an .xlsx file.
+*/
+
+package excel_reader;
+
+import java.util.Scanner;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
+import java.io.File;
+ 
+public class Dri {
+
+    //driver
+    public static void main(String[] args) throws IOException {
+        Scanner scan = new Scanner(System.in);
+
+        System.out.print("Please Enter the link of the file: ");
+        String impoFileLink = scan.nextLine();
+        
+        File file = new File(impoFileLink);
+        if (!file.exists()) {
+            System.out.println("Error: File not found, please try again");
+            System.exit(1);
+        } else {
+            System.out.println("File found, executable.");
+        }
+
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        // first sheet create
+        HSSFSheet sheet = workbook.createSheet("FirstExcelSheet");
+        // first row create - 1
+        HSSFRow row = sheet.createRow(0);
+        // first cell create - 1
+        HSSFCell cell = row.createCell(0); // A-1
+        // give data into A-1 cell
+        cell.setCellValue("Tester");
+
+        // Output as an excel file
+        workbook.write(new FileOutputStream(impoFileLink));
+        workbook.close();
+
+        scan.close();
+    }
+}
